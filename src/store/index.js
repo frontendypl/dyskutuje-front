@@ -3,7 +3,12 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import topicModule from "@/store/modules/topicModule";
+
 export default new Vuex.Store({
+  modules: {
+    topicModule
+  },
   state: {
   },
   getters: {
@@ -18,6 +23,5 @@ export default new Vuex.Store({
   },
   actions: {
   },
-  modules: {
-  }
+
 })

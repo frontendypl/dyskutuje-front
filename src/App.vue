@@ -8,6 +8,14 @@
 <style lang="scss">
 @import "@/assets/styles/reset.css";
 
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-style: normal;
+  font-display: auto;
+  src: local('Roboto'), url('@/assets/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+}
+
 *{
   box-sizing: border-box;
 }
@@ -25,6 +33,8 @@ html {
   display: flex;
   flex-direction: column;
   padding: 1em;
+
+  font-family: Roboto, sans-serif;
 }
 
 .container{

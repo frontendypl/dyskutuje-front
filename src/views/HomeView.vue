@@ -1,21 +1,44 @@
 <template>
   <div class="home">
     <div class="container">
-      <TopicInputComponent/>
+      <TopicInputComponent
+        :newTopicUrl="newTopicUrl"
+        :newTopicErrors="newTopicErrors"
+        :setNewTopicUrl="setNewTopicUrl"
+        :postNewTopic="postNewTopic"
+      />
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import {mapState, mapGetters, mapActions} from "vuex";
+
 import TopicInputComponent from "@/components/TopicInputComponent.vue";
 
 export default {
   name: 'HomeView',
   components: {
     TopicInputComponent,
-    HelloWorld
+  },
+  data(){
+    return {
+
+    }
+  },
+  computed: {
+    ...mapState({
+      newTopicUrl: state => state.topicModule.newTopicUrl,
+      newTopicErrors: state => state.topicModule.newTopicErrors
+    }),
+    ...mapGetters(['apiUrl'])
+  },
+  methods: {
+    ...mapActions({
+      setNewTopicUrl: 'topicModule/setNewTopicUrl',
+      postNewTopic: 'topicModule/postNewTopic',
+    })
   }
 }
 </script>
