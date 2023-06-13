@@ -16,6 +16,23 @@
   src: local('Roboto'), url('@/assets/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-style: normal;
+  font-display: auto;
+  src: local('Roboto'), url('@/assets/fonts/Roboto/Roboto-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-style: normal;
+  font-display: auto;
+  src: local('Roboto'), url('@/assets/fonts/Roboto/Roboto-Bold.ttf') format('truetype');
+}
+
+
 *{
   box-sizing: border-box;
 }
