@@ -2,9 +2,7 @@
   <div class="home">
     <div class="container">
       <TopicInputComponent
-        :newTopicUrl="newTopicUrl"
         :newTopicErrors="newTopicErrors"
-        :setNewTopicUrl="setNewTopicUrl"
         :postNewTopic="postNewTopic"
       />
     </div>
@@ -15,7 +13,7 @@
 // @ is an alias to /src
 import {mapState, mapGetters, mapActions} from "vuex";
 
-import TopicInputComponent from "@/components/TopicInputComponent.vue";
+import TopicInputComponent from "@/components/TopicFormComponent.vue";
 
 export default {
   name: 'HomeView',
@@ -36,7 +34,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      setNewTopicUrl: 'topicModule/setNewTopicUrl',
       postNewTopic: 'topicModule/postNewTopic',
     })
   }

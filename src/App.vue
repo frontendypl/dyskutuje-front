@@ -5,6 +5,45 @@
   </div>
 </template>
 
+<script>
+import {mapState, mapGetters, mapActions} from "vuex";
+import HeaderComponent from "@/components/HeaderComponent.vue";
+
+export default {
+  name: 'App',
+  components: {
+    HeaderComponent
+  },
+  data(){
+    return {
+      test: 1
+    }
+  },
+  computed: {
+    ...mapState({
+      activeTopic: state => state.topicModule.activeTopic,
+    })
+  },
+  methods: {
+
+  },
+  watch: {
+    activeTopic: {
+      handler(newValue, oldValue){
+        if(newValue._id && this.$route.params.id !== newValue._id){
+          this.$router.push({name: 'TopicView', params: {id: newValue._id}})
+        }
+        else if (newValue._id){}
+        else{
+          this.$router.push({name: 'home'})
+        }
+      }
+    }
+  }
+}
+
+</script>
+
 <style lang="scss">
 @import "@/assets/styles/reset.css";
 
@@ -67,9 +106,3 @@ html {
   width: 100%;
 }
 </style>
-
-<script setup>
-
-import HeaderComponent from "@/components/HeaderComponent.vue";
-
-</script>

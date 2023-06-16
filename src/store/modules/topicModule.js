@@ -4,36 +4,92 @@ export default {
     namespaced: true,
     state() {
         return {
-            newTopicUrl: '',
-            newTopicErrors: {}
+            activeTopic: {
+                _id: '',
+                url: '',
+                createdAt: '',
+                updatedAt: '',
+            },
+            // activeTopic's comments
+            comments: [],
+
+            //Errors on creating
+            newTopicErrors: {},
+            newCommentErrors: {},
+
+
         }
     },
     getters: {
     },
     mutations: {
-        setNewTopicUrl(state, payload){
-            state.newTopicUrl = payload
-        },
         setNewTopicErrors(state,payload){
             state.newTopicErrors = {...payload}
-        }
+        },
+        setTopicData(state, payload){
+            state.activeTopic = {...payload}
+        },
+        //Comments
+        setComments(state, payload){
+            state.comments = [...payload]
+        },
+        setNewCommentErrors(state,payload){
+            state.newCommentErrors = {...payload}
+        },
     },
     actions: {
-        setNewTopicUrl({commit},payload){
-            commit('setNewTopicUrl',payload)
-        },
         setNewTopicErrors({commit},payload){
             commit('setNewTopicErrors',payload)
         },
-        async postNewTopic({state,rootGetters,commit, dispatch}){
+        postNewTopic({state,rootGetters,commit, dispatch}, url){
+            return new Promise(async (resolve, reject)=>{
+                try{
+                    dispatch('setNewTopicErrors', {})
+                    const response = await axios.post(`${rootGetters.apiUrl}/topics`,{
+                        url
+                    })
+                    //TODO przerobić na backendzie że jesli topic istnieje to komentarze pobierać do niego
+                    commit('setTopicData', response.data)
+                    // commit('setComments', response.data.topic)
+                    resolve()
+                }catch (e) {
+                    dispatch('setNewTopicErrors', e.response.data)
+                    reject('Errors in form')
+                }
+
+            })
+        },
+        async getTopicData({rootGetters,commit},topicId){
             try{
-                dispatch('setNewTopicErrors', {})
-                const response = await axios.post(`${rootGetters.apiUrl}/topics`,{
-                    url: state.newTopicUrl
-                })
+                // dispatch('setTopicData', {})
+                const response = await axios.get(`${rootGetters.apiUrl}/topics/${topicId}`)
+                commit('setTopicData', response.data.topic)
+                commit('setComments', response.data.comments)
             }catch (e) {
-                dispatch('setNewTopicErrors', e.response.data)
+
             }
-        }
+        },
+        //Comments
+        postNewComment({state,rootState, rootGetters,commit, dispatch},{text, nickName, parent=null}){
+            return new Promise(async (resolve, reject)=>{
+                try{
+                    commit('setNewCommentErrors', {})
+                    const response = await axios.post(`${rootGetters.apiUrl}/comments`,{
+                        text,
+                        nickName,
+                        parent,
+                        topic: state.activeTopic._id
+                    })
+                    commit('setTopicData', response.data)
+
+                    resolve()
+
+                }catch (e) {
+                    commit('setNewCommentErrors', e.response.data.errors)
+                    reject('Errors in form')
+                }
+            })
+        },
     },
+
 }

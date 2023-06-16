@@ -7,7 +7,7 @@ import topicModule from "@/store/modules/topicModule";
 
 export default new Vuex.Store({
   modules: {
-    topicModule
+    topicModule,
   },
   state: {
   },
