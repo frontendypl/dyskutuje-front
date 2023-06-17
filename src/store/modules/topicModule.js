@@ -4,6 +4,7 @@ export default {
     namespaced: true,
     state() {
         return {
+            topics: [],
             activeTopic: {
                 _id: '',
                 url: '',
@@ -23,6 +24,9 @@ export default {
     getters: {
     },
     mutations: {
+        setTopics(state, payload){
+            state.topics = [...payload]
+        },
         setNewTopicErrors(state,payload){
             state.newTopicErrors = {...payload}
         },
@@ -38,6 +42,14 @@ export default {
         },
     },
     actions: {
+        async setTopics({rootGetters, commit}, payload){
+            try{
+                const response = await axios.get(`${rootGetters.apiUrl}/topics`)
+                commit('setTopics', response.data)
+            }catch (e) {
+                
+            }
+        },
         setNewTopicErrors({commit},payload){
             commit('setNewTopicErrors',payload)
         },
@@ -50,7 +62,6 @@ export default {
                     })
                     //TODO przerobić na backendzie że jesli topic istnieje to komentarze pobierać do niego
                     commit('setTopicData', response.data)
-                    // commit('setComments', response.data.topic)
                     resolve()
                 }catch (e) {
                     dispatch('setNewTopicErrors', e.response.data)
@@ -80,7 +91,7 @@ export default {
                         parent,
                         topic: state.activeTopic._id
                     })
-                    commit('setTopicData', response.data)
+                    dispatch('getTopicData', state.activeTopic._id)
 
                     resolve()
 

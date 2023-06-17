@@ -1,10 +1,15 @@
 <template>
-  <div class="home">
+  <div class="HomeView">
     <div class="container">
-      <TopicInputComponent
-        :newTopicErrors="newTopicErrors"
-        :postNewTopic="postNewTopic"
-      />
+      <div class="components">
+        <TopicInputComponent
+            :newTopicErrors="newTopicErrors"
+            :postNewTopic="postNewTopic"
+        />
+        <TopicListComponent
+          :topics="topics"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -14,11 +19,13 @@
 import {mapState, mapGetters, mapActions} from "vuex";
 
 import TopicInputComponent from "@/components/TopicFormComponent.vue";
+import TopicListComponent from "@/components/TopicListComponent.vue";
 
 export default {
   name: 'HomeView',
   components: {
     TopicInputComponent,
+    TopicListComponent
   },
   data(){
     return {
@@ -27,15 +34,33 @@ export default {
   },
   computed: {
     ...mapState({
-      newTopicUrl: state => state.topicModule.newTopicUrl,
-      newTopicErrors: state => state.topicModule.newTopicErrors
+      newTopicErrors: state => state.topicModule.newTopicErrors,
+      topics: state => state.topicModule.topics,
     }),
     ...mapGetters(['apiUrl'])
   },
   methods: {
     ...mapActions({
       postNewTopic: 'topicModule/postNewTopic',
+      setTopics: 'topicModule/setTopics',
     })
+  },
+  mounted(){
+    this.setTopics()
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+.HomeView{
+
+}
+
+.components{
+  width: 100%;
+  //display: flex;
+  //flex-direction: column;
+}
+
+</style>
