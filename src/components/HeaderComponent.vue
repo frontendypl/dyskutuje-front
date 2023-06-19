@@ -1,6 +1,6 @@
 <template>
   <div class="HeaderComponent component">
-    <div class="container">
+    <div class="container container--flex">
       <router-link class="logo"
                    :to="{name: 'home'}"
       >

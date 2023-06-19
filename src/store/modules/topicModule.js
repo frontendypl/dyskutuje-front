@@ -16,7 +16,7 @@ export default {
 
             //Errors on creating
             newTopicErrors: {},
-            newCommentErrors: {},
+            // newCommentErrors: {}, // to delete
 
 
         }
@@ -37,9 +37,9 @@ export default {
         setComments(state, payload){
             state.comments = [...payload]
         },
-        setNewCommentErrors(state,payload){
-            state.newCommentErrors = {...payload}
-        },
+        // setNewCommentErrors(state,payload){
+        //     state.newCommentErrors = {...payload}
+        // },
     },
     actions: {
         async setTopics({rootGetters, commit}, payload){
@@ -84,7 +84,7 @@ export default {
         postNewComment({state,rootState, rootGetters,commit, dispatch},{text, nickName, parent=null}){
             return new Promise(async (resolve, reject)=>{
                 try{
-                    commit('setNewCommentErrors', {})
+                    // commit('setNewCommentErrors', {})
                     const response = await axios.post(`${rootGetters.apiUrl}/comments`,{
                         text,
                         nickName,
@@ -96,8 +96,8 @@ export default {
                     resolve()
 
                 }catch (e) {
-                    commit('setNewCommentErrors', e.response.data.errors)
-                    reject('Errors in form')
+                    // commit('setNewCommentErrors', e.response.data.errors)
+                    reject({errors: e.response.data.errors})
                 }
             })
         },

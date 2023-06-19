@@ -52,6 +52,14 @@ export default {
   font-weight: 400;
   font-style: normal;
   font-display: auto;
+  src: local('Roboto'), url('@/assets/fonts/Roboto/Roboto-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-style: normal;
+  font-display: auto;
   src: local('Roboto'), url('@/assets/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
 }
 
@@ -103,11 +111,18 @@ html {
 }
 
 .container{
-  display: flex;
+  
   @media screen and (min-width: 1000px) {
     max-width: 1000px;
     width: 100%;
     margin: 0 auto;
+  }
+
+  &--flex {
+    display: flex;
+  }
+  &--column{
+    flex-direction: column;
   }
 }
 
