@@ -8,7 +8,8 @@
             </div>
             <div class="comment__time">
                 <div class="comment__time__text">
-                    {{ Date(comment.createdAt).toLocaleString('PL-pl').split('GMT')[0] }}
+                    <!-- {{ Date(comment.createdAt).toLocaleString('PL-pl').split('GMT')[0] }} -->
+                    {{ comment.createdAt }}
                 </div>
             </div>
             <div class="comment__content">
@@ -16,7 +17,7 @@
                     {{ comment.text }}
                 </div>
             </div>
-            <div class="comment__answer-button">
+            <div class="comment__answer-button" v-if="!comment.parent">
                 <button class="comment__answer-button__button" @click="handleFormActive" :title="!formActive?'odpowiedz':'zamknij'">
 
                     <svg v-if="!formActive" xmlns="http://www.w3.org/2000/svg" fill="black" height="1em" viewBox="0 0 512 512">

@@ -5,20 +5,44 @@
         <CommentFormComponent :postNewComment="postNewComment" />
       </div>
       <div class="TopicView__comment-list">
-        <CommentComponent v-for="(comment, i) in comments" 
-        :comment="comment" 
-        :key="comment._id" 
-        :data-key="comment._id"
-        :ref="`comment--${comment._id}`"
-        >
-          <template v-slot:commentForm>
-            <CommentFormComponent 
-            :postNewComment="postNewComment"
-             :parent="comment._id" 
-             @commentFormSent="commentFormSent(comment._id)"
-             />
-          </template>
-        </CommentComponent>
+        <div class="TopicView__comment-list__comment" v-for="(comment, i) in commentsWithSubComments">
+        
+          <CommentComponent
+          :comment="comment" 
+          :key="comment._id" 
+          :data-key="comment._id"
+          :ref="`comment--${comment._id}`"
+          v-if="!comment.parent"
+          >
+            <template v-slot:commentForm>
+              <CommentFormComponent 
+              :postNewComment="postNewComment"
+              :parent="comment._id" 
+              @commentFormSent="commentFormSent(comment._id)"
+              />
+            </template>
+          </CommentComponent>
+
+          <div class="TopicView__comment-list__comment__subcomments">
+            <CommentComponent
+            v-for="(subComments,i) in comment.subComments"
+            :comment="subComments" 
+            :key="subComments._id" 
+            :data-key="subComments._id"
+            :ref="`comment--${subComments._id}`"
+          >
+            <!-- <template v-slot:commentForm>
+              <CommentFormComponent 
+              :postNewComment="postNewComment"
+              :parent="subComments._id" 
+              @commentFormSent="commentFormSent(subComments._id)"
+              />
+            </template> -->
+          </CommentComponent>
+          </div>
+
+        </div>
+        
       </div>
     </div>
   </div>
@@ -48,7 +72,10 @@ export default {
       // newCommentErrors: state => state.topicModule.newCommentErrors,
       comments: state => state.topicModule.comments,
     }),
-    ...mapGetters(['apiUrl'])
+    ...mapGetters({
+      apiUrl: 'apiUrl',
+      commentsWithSubComments: 'topicModule/commentsWithSubComments'
+    })
   },
   methods: {
     ...mapActions({
@@ -60,10 +87,10 @@ export default {
       console.log(this.$refs[`comment--${id}`][0].handleFormActive());
     }
   },
-  created() {
-    if (this.$route.params.id && !this.activeTopic._id) {
+  mounted() {
+    // if (this.$route.params.id && !this.activeTopic._id) {
       this.getTopicData(this.$route.params.id)
-    }
+    // }
 
   }
 }
@@ -95,6 +122,15 @@ export default {
       }
       }
     }
+
+    &__comment{
+      
+      &__subcomments{
+        width: 90%;
+        margin: 0 0 0 auto;
+      }
+    }
+
   }
 
 }

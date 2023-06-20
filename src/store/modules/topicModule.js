@@ -1,4 +1,5 @@
 import axios from "axios";
+// import { forEach } from "core-js";
 
 export default {
     namespaced: true,
@@ -22,6 +23,15 @@ export default {
         }
     },
     getters: {
+        commentsWithSubComments(state){
+            const comments = [...state.comments]
+            comments.forEach(comment=>{
+                const subComments = comments.filter(el=>comment._id === el.parent)
+                comment.subComments = [...subComments]
+                comment.subComments.reverse()
+            })
+            return comments
+        }
     },
     mutations: {
         setTopics(state, payload){
