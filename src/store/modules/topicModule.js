@@ -28,6 +28,15 @@ export default {
                 comment.subComments.reverse()
             })
             return comments
+        },
+        topicsWithPrintScreens(state){
+            const topics = [...state.topics]
+            const printScreens = [...state.printScreens]
+            topics.forEach(topic=>{
+                const printScreen = printScreens.find(el=>topic._id === el.topic)
+                topic.printScreen = {...printScreen}
+            })
+            return topics
         }
     },
     mutations: {
@@ -41,9 +50,9 @@ export default {
         setComments(state, payload){
             state.comments = [...payload]
         },
-        // setNewCommentErrors(state,payload){
-        //     state.newCommentErrors = {...payload}
-        // },
+        setPrintScreens(state, payload){
+            state.printScreens = [...payload]
+        }
     },
     actions: {
         async setTopics({rootGetters, commit}, payload){
@@ -99,6 +108,14 @@ export default {
                     reject({errors: e.response.data.errors})
                 }
             })
+        },
+        async setPrintScreens({rootGetters, commit}, payload){
+            try{
+                const response = await axios.get(`${rootGetters.apiUrl}/printScreens`)
+                commit('setPrintScreens', response.data)
+            }catch (e) {
+                
+            }
         },
     },
 

@@ -2,12 +2,15 @@
   <div class="TopicListComponent component">
     <router-link :to="{name:'TopicView', params:{id: topic._id}}"  class="topic" v-for="(topic, i) in topics" :key="topic._id">
       <div class="topic__image">
-        <img class="topic__image__img" src="https://newsblog.pl/wp-content/uploads/2022/02/1644700511_239_Jak-wyslac-wiadomosc-na-YouTube.png" alt="">
+        <img
+              :src="`data:image/jpeg;base64,${topic.printScreen.src}`"
+              class="topic__image__img"
+          >
       </div>
       <div class="topic__details">
         <div class="topic__details__title">
           <div class="topic__details__title__text">
-            Najnowsze informacje z YT.
+            {{ topic.printScreen.title }}
           </div>
         </div>
         <div class="topic__details__url">

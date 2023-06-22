@@ -7,7 +7,7 @@
             :postNewTopic="postNewTopic"
         />
         <TopicListComponent
-          :topics="topics"
+          :topics="topicsWithPrintScreens"
         />
       </div>
     </div>
@@ -37,16 +37,21 @@ export default {
       newTopicErrors: state => state.topicModule.newTopicErrors,
       topics: state => state.topicModule.topics,
     }),
-    ...mapGetters(['apiUrl'])
+    ...mapGetters({
+      apiUrl: 'apiUrl',
+      topicsWithPrintScreens: 'topicModule/topicsWithPrintScreens'
+    })
   },
   methods: {
     ...mapActions({
       postNewTopic: 'topicModule/postNewTopic',
       setTopics: 'topicModule/setTopics',
+      setPrintScreens: 'topicModule/setPrintScreens',
     })
   },
   mounted(){
     this.setTopics()
+    this.setPrintScreens()
   }
 }
 </script>
