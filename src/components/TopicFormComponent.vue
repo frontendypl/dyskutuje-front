@@ -31,16 +31,14 @@ export default {
   name: "TopicInputComponent",
   components: {HeaderComponent},
   props: {
-    newTopicErrors: {
-      type: Object
-    },
     postNewTopic: {
       type: Function
     },
   },
   data(){
     return {
-      url: ''
+      url: '',
+      newTopicErrors: {}
     }
   },
   // TODO, metody mapować w widoku i przekazać to komponentu propsami
@@ -51,8 +49,9 @@ export default {
     handleForm() {
       this.postNewTopic(this.url).then(()=>{
         this.url=''
+        this.newTopicErrors ={}
       }, error=>{
-        console.log(error)
+        this.newTopicErrors = {...error}
       })
     }
   }

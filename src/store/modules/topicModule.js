@@ -15,11 +15,8 @@ export default {
             // activeTopic's comments
             comments: [],
 
-            //Errors on creating
-            newTopicErrors: {},
-            // newCommentErrors: {}, // to delete
-
-
+            //TODO
+            printScreens: []
         }
     },
     getters: {
@@ -36,9 +33,6 @@ export default {
     mutations: {
         setTopics(state, payload){
             state.topics = [...payload]
-        },
-        setNewTopicErrors(state,payload){
-            state.newTopicErrors = {...payload}
         },
         setTopicData(state, payload){
             state.activeTopic = {...payload}
@@ -60,13 +54,9 @@ export default {
                 
             }
         },
-        setNewTopicErrors({commit},payload){
-            commit('setNewTopicErrors',payload)
-        },
         postNewTopic({state,rootGetters,commit, dispatch}, url){
             return new Promise(async (resolve, reject)=>{
                 try{
-                    dispatch('setNewTopicErrors', {})
                     const response = await axios.post(`${rootGetters.apiUrl}/topics`,{
                         url
                     })
@@ -74,8 +64,7 @@ export default {
                     commit('setTopicData', response.data)
                     resolve()
                 }catch (e) {
-                    dispatch('setNewTopicErrors', e.response.data)
-                    reject('Errors in form')
+                    reject(e.response.data)
                 }
 
             })
