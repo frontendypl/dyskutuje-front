@@ -2,7 +2,7 @@
   <div class="TopicInputComponent component">
     <form @submit.prevent="handleForm">
       <div class="input">
-        <input class="input__field" type="text"
+        <input class="input__field" type="text" placeholder="Tutaj wklej lub wpisz adres strony"
                v-model="url"
         >
         <button class="input__button" type="submit">

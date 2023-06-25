@@ -50,9 +50,14 @@ export default {
     })
   },
   mounted(){
-    this.setTopics()
-    this.setPrintScreens()
-  }
+    // this.setTopics();
+    // this.setPrintScreens();
+
+    // const time = setInterval(() => {
+    //   this.setTopics();
+    //   this.setPrintScreens();
+    // }, 5000);
+  },
 }
 </script>
 

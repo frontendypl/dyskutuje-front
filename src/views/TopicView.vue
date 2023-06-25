@@ -4,7 +4,7 @@
       <div class="TopicView__comment-form">
         <CommentFormComponent :postNewComment="postNewComment" />
       </div>
-      <div class="TopicView__comment-list">
+      <div class="TopicView__comment-list" v-if="commentsWithSubComments.length">
         <div class="TopicView__comment-list__comment" v-for="(comment, i) in commentsWithSubComments">
         
           <CommentComponent
@@ -43,6 +43,9 @@
 
         </div>
         
+      </div>
+      <div v-else>
+        Nie ma jeszcze żadnych komentarzy.
       </div>
     </div>
   </div>

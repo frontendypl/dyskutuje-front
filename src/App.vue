@@ -1,12 +1,12 @@
 <template>
   <div id="app" class="app">
     <HeaderComponent />
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-import {mapState, mapGetters, mapActions} from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import HeaderComponent from "@/components/HeaderComponent.vue";
 
 export default {
@@ -14,7 +14,7 @@ export default {
   components: {
     HeaderComponent
   },
-  data(){
+  data() {
     return {
       test: 1
     }
@@ -25,20 +25,35 @@ export default {
     })
   },
   methods: {
-
+    ...mapActions({
+      setTopics: 'topicModule/setTopics',
+      setPrintScreens: 'topicModule/setPrintScreens',
+    })
   },
   watch: {
     activeTopic: {
-      handler(newValue, oldValue){
-        if(newValue._id && this.$route.params.id !== newValue._id){
-          this.$router.push({name: 'TopicView', params: {id: newValue._id}})
+      handler(newValue, oldValue) {
+        if (newValue._id && this.$route.params.id !== newValue._id) {
+          this.$router.push({ name: 'TopicView', params: { id: newValue._id } })
         }
-        else if (newValue._id){}
-        else{
-          this.$router.push({name: 'home'})
+        else if (newValue._id) { }
+        else {
+          this.$router.push({ name: 'home' })
         }
       }
     }
+  },
+  created() {
+    
+  },
+  mounted(){
+    this.setTopics();
+    this.setPrintScreens();
+
+    const time = setInterval(() => {
+      this.setTopics();
+      this.setPrintScreens();
+    }, 5000);
   }
 }
 
@@ -80,16 +95,16 @@ export default {
 }
 
 
-*{
+* {
   box-sizing: border-box;
 }
 
-a{
+a {
   color: inherit;
   text-decoration: none;
 }
 
-img{
+img {
   max-width: 100%;
 }
 
@@ -103,6 +118,7 @@ html {
 }
 
 .app {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   padding: 1em;
@@ -110,8 +126,8 @@ html {
   font-family: Roboto, sans-serif;
 }
 
-.container{
-  
+.container {
+
   @media screen and (min-width: 1000px) {
     max-width: 1000px;
     width: 100%;
@@ -121,7 +137,8 @@ html {
   &--flex {
     display: flex;
   }
-  &--column{
+
+  &--column {
     flex-direction: column;
   }
 }

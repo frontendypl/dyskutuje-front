@@ -15,14 +15,15 @@
         </div>
         <div class="topic__details__url">
           <div class="topic__details__url__text">
-            {{topic.url}}
+            {{topic.url.slice(0,50)}}
+            {{ topic.url.length > 50 ? '...' : '' }}
           </div>
         </div>
-        <div class="topic__details__domain">
+        <!-- <div class="topic__details__domain">
           <div class="topic__details__domain__text">
             {{topic.url}}
           </div>
-        </div>
+        </div> -->
         <div class="topic__details__comments">
           <div class="topic__details__domain__comments">
             5
@@ -52,7 +53,7 @@ export default {
   display: flex;
 
   &__image {
-    width: 30em;
+    flex: 1;
     padding: 1em;
     &__img {
 
@@ -60,6 +61,7 @@ export default {
   }
 
   &__details{
+    flex: 2;
     padding: 1em;
     
     &__title {
