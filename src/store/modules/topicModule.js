@@ -16,10 +16,19 @@ export default {
             comments: [],
 
             //TODO
-            printScreens: []
+            printScreens: [],
+
+            status: {
+                setTopics: 'ready',
+                setPrintScreens: 'ready',
+                getTopicData: 'ready'
+            }
         }
     },
     getters: {
+        activeTopicPrintScreen(state){
+            return state.printScreens.find(el=>el.topic === state.activeTopic._id)
+        },
         commentsWithSubComments(state){
             const comments = [...state.comments]
             comments.forEach(comment=>{
@@ -55,12 +64,16 @@ export default {
         }
     },
     actions: {
-        async setTopics({rootGetters, commit}, payload){
+        async setTopics({state, rootGetters, commit}, payload){
+            if (state.status.setTopics === 'pending') return false
+
             try{
+                state.status.setTopics = 'pending'
                 const response = await axios.get(`${rootGetters.apiUrl}/topics`)
                 commit('setTopics', response.data)
+                state.status.setTopics = 'ready'
             }catch (e) {
-                
+                state.status.setTopics = 'ready'
             }
         },
         postNewTopic({state,rootGetters,commit, dispatch}, url){
@@ -78,13 +91,16 @@ export default {
 
             })
         },
-        async getTopicData({rootGetters,commit},topicId){
+        async getTopicData({state, rootGetters,commit},topicId){
+            if (state.status.setTopics === 'pending') return false
             try{
-                // dispatch('setTopicData', {})
+                state.status.setTopics = 'pending'
                 const response = await axios.get(`${rootGetters.apiUrl}/topics/${topicId}`)
                 commit('setTopicData', response.data.topic)
                 commit('setComments', response.data.comments)
+                state.status.setTopics = 'ready'
             }catch (e) {
+                state.status.setTopics = 'ready'
 
             }
         },
@@ -109,12 +125,16 @@ export default {
                 }
             })
         },
-        async setPrintScreens({rootGetters, commit}, payload){
+        async setPrintScreens({state, rootGetters, commit}, payload){
+            if (state.status.setPrintScreens === 'pending') return false
+
             try{
+                state.status.setPrintScreens = 'pending'
                 const response = await axios.get(`${rootGetters.apiUrl}/printScreens`)
                 commit('setPrintScreens', response.data)
+                state.status.setPrintScreens = 'ready'
             }catch (e) {
-                
+                state.status.setPrintScreens = 'ready'
             }
         },
     },

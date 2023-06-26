@@ -22,6 +22,8 @@ export default {
   computed: {
     ...mapState({
       activeTopic: state => state.topicModule.activeTopic,
+      topics: state => state.topicModule.topics,
+      printScreens: state => state.topicModule.printScreens,
     })
   },
   methods: {
@@ -41,19 +43,31 @@ export default {
           this.$router.push({ name: 'home' })
         }
       }
-    }
+    },
+    // topics: {
+    //   handler(newValue, oldValue) {
+    //     if(newValue.length !== oldValue.length)
+    //     this.setPrintScreens();
+    //   },
+    // },
   },
   created() {
     
   },
   mounted(){
-    this.setTopics();
-    this.setPrintScreens();
+    this.setTopics();    
 
     const time = setInterval(() => {
-      this.setTopics();
-      this.setPrintScreens();
-    }, 5000);
+
+      if(this.$route.name === 'home'){
+        this.setTopics();
+      }
+
+      if(this.topics.length !== this.printScreens.length){
+        this.setPrintScreens();
+      }
+
+    }, 2000);
   }
 }
 

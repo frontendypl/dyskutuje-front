@@ -1,6 +1,12 @@
 <template>
   <div class="TopicView">
     <div class="container">
+      
+      <div class="TopicView__image" v-if="!!activeTopicPrintScreen?.src">
+        <img class="TopicView__image__img" :src="`data:image/jpeg;base64,${activeTopicPrintScreen?.src}`" />
+      </div>
+      <ImageLoaderComponent v-else/>
+
       <div class="TopicView__comment-form">
         <CommentFormComponent :postNewComment="postNewComment" />
       </div>
@@ -56,17 +62,19 @@
 import { mapState, mapGetters, mapActions } from "vuex";
 import CommentFormComponent from "@/components/CommentFormComponent.vue";
 import CommentComponent from "@/components/CommentComponent.vue";
+import ImageLoaderComponent from "@/components/ImageLoaderComponent.vue";
 
 
 export default {
   name: 'TopicView',
   components: {
     CommentFormComponent,
-    CommentComponent
+    CommentComponent,
+    ImageLoaderComponent
   },
   data() {
     return {
-
+      timeInterval: ''
     }
   },
   computed: {
@@ -77,30 +85,46 @@ export default {
     }),
     ...mapGetters({
       apiUrl: 'apiUrl',
-      commentsWithSubComments: 'topicModule/commentsWithSubComments'
+      commentsWithSubComments: 'topicModule/commentsWithSubComments',
+      activeTopicPrintScreen: 'topicModule/activeTopicPrintScreen',
     })
   },
   methods: {
     ...mapActions({
+      setTopics: 'topicModule/setTopics',
       getTopicData: 'topicModule/getTopicData',
       postNewTopic: 'topicModule/postNewTopic',
       postNewComment: 'topicModule/postNewComment',
+      setPrintScreens: 'topicModule/setPrintScreens',
     }),
     commentFormSent(id){
       console.log(this.$refs[`comment--${id}`][0].handleFormActive());
     }
   },
   mounted() {
-    // if (this.$route.params.id && !this.activeTopic._id) {
+      this.setTopics()
       this.getTopicData(this.$route.params.id)
-    // }
 
+      this.timeInterval = setInterval(() => {
+
+        this.getTopicData(this.$route.params.id)
+
+    }, 2000);
+  },
+  beforeDestroy(){
+    clearInterval(this.timeInterval)
   }
 }
 </script>
 
 <style lang="scss" >
 .TopicView {
+
+  &__image {
+    border-radius: 2em;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
   &__comment-form {
     margin: 7em 0;
   }
