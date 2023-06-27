@@ -52,7 +52,7 @@ export default {
         setTopics(state, payload){
             state.topics = [...payload]
         },
-        setTopicData(state, payload){
+        setActiveTopic(state, payload){
             state.activeTopic = {...payload}
         },
         //Comments
@@ -64,7 +64,7 @@ export default {
         }
     },
     actions: {
-        async setTopics({state, rootGetters, commit}, payload){
+        async setTopics({state, rootGetters, commit, dispatch}, payload){
             if (state.status.setTopics === 'pending') return false
 
             try{
@@ -72,6 +72,12 @@ export default {
                 const response = await axios.get(`${rootGetters.apiUrl}/topics`)
                 commit('setTopics', response.data)
                 state.status.setTopics = 'ready'
+
+                dispatch('saveToStorage',{
+                    name: 'topics',
+                    data: response.data
+                })
+                
             }catch (e) {
                 state.status.setTopics = 'ready'
             }
@@ -83,8 +89,8 @@ export default {
                         url
                     })
                     //TODO przerobić na backendzie że jesli topic istnieje to komentarze pobierać do niego
-                    commit('setTopicData', response.data)
-                    resolve()
+                    // commit('setActiveTopic', response.data)
+                    resolve(response.data)
                 }catch (e) {
                     reject(e.response.data)
                 }
@@ -96,13 +102,19 @@ export default {
             try{
                 state.status.setTopics = 'pending'
                 const response = await axios.get(`${rootGetters.apiUrl}/topics/${topicId}`)
-                commit('setTopicData', response.data.topic)
+                commit('setActiveTopic', response.data.topic)
                 commit('setComments', response.data.comments)
                 state.status.setTopics = 'ready'
             }catch (e) {
                 state.status.setTopics = 'ready'
 
             }
+        },
+        setActiveTopic({commit}, payload){
+            commit('setActiveTopic', payload)
+        },
+        resetActiveTopic({commit}){
+            commit('setActiveTopic', {})
         },
         //Comments
         postNewComment({state,rootState, rootGetters,commit, dispatch},{text, nickName, parent=null}){
@@ -125,7 +137,10 @@ export default {
                 }
             })
         },
-        async setPrintScreens({state, rootGetters, commit}, payload){
+        setComments({commit}, payload){
+            commit('setComments',payload)
+        },
+        async setPrintScreens({state, rootGetters, dispatch, commit}, payload){
             if (state.status.setPrintScreens === 'pending') return false
 
             try{
@@ -133,9 +148,27 @@ export default {
                 const response = await axios.get(`${rootGetters.apiUrl}/printScreens`)
                 commit('setPrintScreens', response.data)
                 state.status.setPrintScreens = 'ready'
+                dispatch('saveToStorage',{
+                    name: 'printScreens',
+                    data: response.data
+                })
             }catch (e) {
                 state.status.setPrintScreens = 'ready'
             }
+        },
+        saveToStorage({state, rootGetters, commit},{name,data}){
+            localStorage.setItem(name, JSON.stringify(data))
+
+        },
+        loadTopicsFromStorage({commit}){
+            console.log('storage setTopics')
+            const topics = localStorage.getItem('topics')
+            commit('setTopics', JSON.parse(topics))
+        },
+        loadPrintScreensFromStorage({commit}){
+            console.log('storage printScreens')
+            const printScreens = localStorage.getItem('printScreens')
+            commit('setPrintScreens', JSON.parse(printScreens))
         },
     },
 

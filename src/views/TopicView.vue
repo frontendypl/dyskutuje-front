@@ -93,6 +93,7 @@ export default {
     ...mapActions({
       setTopics: 'topicModule/setTopics',
       getTopicData: 'topicModule/getTopicData',
+      
       postNewTopic: 'topicModule/postNewTopic',
       postNewComment: 'topicModule/postNewComment',
       setPrintScreens: 'topicModule/setPrintScreens',
@@ -102,6 +103,7 @@ export default {
     }
   },
   mounted() {
+      
       this.setTopics()
       this.getTopicData(this.$route.params.id)
 

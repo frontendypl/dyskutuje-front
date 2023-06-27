@@ -47,9 +47,10 @@ export default {
   },
   methods: {
     handleForm() {
-      this.postNewTopic(this.url).then(()=>{
+      this.postNewTopic(this.url).then(topic=>{
         this.url=''
         this.newTopicErrors ={}
+        this.$router.push({ name: 'TopicView', params: { id: topic._id } })
       }, error=>{
         this.newTopicErrors = {...error}
       })

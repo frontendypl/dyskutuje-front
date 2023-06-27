@@ -8,6 +8,7 @@
         />
         <TopicListComponent
           :topics="topicsWithPrintScreens"
+          @topicSelected="setActiveTopic"
         />
       </div>
     </div>
@@ -45,11 +46,17 @@ export default {
   methods: {
     ...mapActions({
       postNewTopic: 'topicModule/postNewTopic',
+      resetActiveTopic: 'topicModule/resetActiveTopic',
+      setActiveTopic: 'topicModule/setActiveTopic',
+      setComments: 'topicModule/setComments',
       setTopics: 'topicModule/setTopics',
       setPrintScreens: 'topicModule/setPrintScreens',
     })
   },
   mounted(){
+    this.resetActiveTopic()
+    this.setComments([])
+
     // this.setTopics();
     // this.setPrintScreens();
 

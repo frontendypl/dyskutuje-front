@@ -30,20 +30,23 @@ export default {
     ...mapActions({
       setTopics: 'topicModule/setTopics',
       setPrintScreens: 'topicModule/setPrintScreens',
+      loadTopicsFromStorage: 'topicModule/loadTopicsFromStorage',
+      loadPrintScreensFromStorage: 'topicModule/loadPrintScreensFromStorage',
     })
   },
   watch: {
-    activeTopic: {
-      handler(newValue, oldValue) {
-        if (newValue._id && this.$route.params.id !== newValue._id) {
-          this.$router.push({ name: 'TopicView', params: { id: newValue._id } })
-        }
-        else if (newValue._id) { }
-        else {
-          this.$router.push({ name: 'home' })
-        }
-      }
-    },
+    // activeTopic: {
+    //   handler(newValue, oldValue) {
+    //     if (newValue._id && this.$route.params.id !== newValue._id) {
+    //       this.$router.push({ name: 'TopicView', params: { id: newValue._id } })
+    //     }
+    //     else if (newValue._id) { }
+    //     else {
+    //       this.$router.push({ name: 'home' })
+    //     }
+    //   }
+    // },
+    
     // topics: {
     //   handler(newValue, oldValue) {
     //     if(newValue.length !== oldValue.length)
@@ -55,6 +58,9 @@ export default {
     
   },
   mounted(){
+    this.loadPrintScreensFromStorage()
+    this.loadTopicsFromStorage()
+
     this.setTopics();    
 
     const time = setInterval(() => {
@@ -67,7 +73,7 @@ export default {
         this.setPrintScreens();
       }
 
-    }, 2000);
+    }, 5000);
   }
 }
 

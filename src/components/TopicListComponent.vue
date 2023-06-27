@@ -1,38 +1,37 @@
 <template>
   <div class="TopicListComponent component">
-    <router-link :to="{ name: 'TopicView', params: { id: topic._id } }" class="topic" v-for="(topic, i) in topics"
+    <router-link :to="{ name: 'TopicView', params: { id: topic._id } }"  v-for="(topic, i) in topics"
       :key="topic._id">
-      <div class="topic__image">
-        <img
-              :src="`data:image/jpeg;base64,${topic.printScreen.src}`"
-              class="topic__image__img"
-              v-if="topic?.printScreen?.src"
-          >
-        <div class="topic__image__loader" v-else>
-          <SpinnerBorderComponent :color="'#3290FA'" />
-        </div>
-        
-      </div>
-      <div class="topic__details">
-        <div class="topic__details__title">
-          <div class="topic__details__title__text">
-            {{ topic.printScreen.title }}
+      <div class="topic" @click="$emit('topicSelected', topic)">
+        <div class="topic__image">
+          <img :src="`data:image/jpeg;base64,${topic.printScreen.src}`" class="topic__image__img"
+            v-if="topic?.printScreen?.src">
+          <div class="topic__image__loader" v-else>
+            <SpinnerBorderComponent :color="'#3290FA'" />
           </div>
+
         </div>
-        <div class="topic__details__url">
-          <div class="topic__details__url__text">
-            {{ topic.url.slice(0, 50) }}
-            {{ topic.url.length > 50 ? '...' : '' }}
+        <div class="topic__details">
+          <div class="topic__details__title">
+            <div class="topic__details__title__text">
+              {{ topic.printScreen.title }}
+            </div>
           </div>
-        </div>
-        <!-- <div class="topic__details__domain">
+          <div class="topic__details__url">
+            <div class="topic__details__url__text">
+              {{ topic.url.slice(0, 50) }}
+              {{ topic.url.length > 50 ? '...' : '' }}
+            </div>
+          </div>
+          <!-- <div class="topic__details__domain">
           <div class="topic__details__domain__text">
             {{topic.url}}
           </div>
         </div> -->
-        <div class="topic__details__comments">
-          <div class="topic__details__domain__comments">
-            5
+          <div class="topic__details__comments">
+            <div class="topic__details__domain__comments">
+              5
+            </div>
           </div>
         </div>
       </div>
@@ -52,6 +51,11 @@ export default {
     topics: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    test() {
+      console.log('test')
     }
   }
 }
