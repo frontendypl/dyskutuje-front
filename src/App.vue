@@ -1,18 +1,21 @@
 <template>
   <div id="app" class="app">
     <HeaderComponent />
-    <router-view />
+    <router-view class="main-view" />
+    <FooterComponent />
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
 import HeaderComponent from "@/components/HeaderComponent.vue";
+import FooterComponent from "@/components/FooterComponent.vue";
 
 export default {
   name: 'App',
   components: {
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   },
   data() {
     return {
@@ -29,6 +32,7 @@ export default {
   methods: {
     ...mapActions({
       setTopics: 'topicModule/setTopics',
+      setAllComments: 'topicModule/setAllComments',
       setPrintScreens: 'topicModule/setPrintScreens',
       loadTopicsFromStorage: 'topicModule/loadTopicsFromStorage',
       loadPrintScreensFromStorage: 'topicModule/loadPrintScreensFromStorage',
@@ -46,7 +50,7 @@ export default {
     //     }
     //   }
     // },
-    
+
     // topics: {
     //   handler(newValue, oldValue) {
     //     if(newValue.length !== oldValue.length)
@@ -55,25 +59,35 @@ export default {
     // },
   },
   created() {
-    
+
   },
-  mounted(){
+  mounted() {
     this.loadPrintScreensFromStorage()
     this.loadTopicsFromStorage()
 
-    this.setTopics();    
+    this.setTopics();
+    this.setAllComments();
 
-    const time = setInterval(() => {
-
-      if(this.$route.name === 'home'){
+    const timeTopics = setInterval(() => {
+      if (this.$route.name === 'home') {
         this.setTopics();
       }
+    }, 3000);
 
-      if(this.topics.length !== this.printScreens.length){
+    const timeComments = setInterval(() => {
+      if (this.$route.name === 'home') {
+        this.setAllComments();
+      }    
+    }, 4000);
+
+    const timePrintScreens = setInterval(() => {
+      if (this.topics.length !== this.printScreens.length) {
         this.setPrintScreens();
       }
-
     }, 5000);
+
+    
+
   }
 }
 
@@ -165,5 +179,9 @@ html {
 
 .component {
   width: 100%;
+}
+
+.main-view {
+  margin: 4em 0;
 }
 </style>

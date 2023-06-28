@@ -125,6 +125,10 @@ export default {
   &__image {
     border-radius: 2em;
     border: 1px solid rgba(0,0,0,0.1);
+
+    &__img{
+      border-radius: 2em;
+    }
   }
 
   &__comment-form {

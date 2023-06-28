@@ -1,8 +1,28 @@
 <template>
   <div class="HomeView">
     <div class="container">
+      <div class="description">
+
+        <div class="description__h1">
+          <h1 class="description__h1__content">
+            Komentuj co chcesz...
+          </h1>
+        </div>
+        <div class="description__h2">
+          <h2 class="description__h2__content">
+            ...artykuły, produkty, filmy ...
+          </h2>
+        </div>
+        <div class="description__h3">
+          <h3 class="description__h3__content">
+            ... wystarczy wkleić link.
+          </h3>
+        </div>
+      </div>
+
       <div class="components">
         <TopicInputComponent
+            class="components__input"
             :newTopicErrors="newTopicErrors"
             :postNewTopic="postNewTopic"
         />
@@ -74,10 +94,36 @@ export default {
 
 }
 
+.description {
+  text-align: center;
+  margin-bottom: 3em;
+   &__h1 {
+      &__content {
+        font-size: 5em;
+        line-height: 120%;
+      }
+   }
+   &__h2 {
+      &__content {
+        font-size: 3.5em;
+        line-height: 120%;
+      }
+   }
+   &__h3 {
+      &__content {
+        font-size: 2.5em;
+        line-height: 120%;
+      }
+   }
+   
+}
+
 .components{
   width: 100%;
-  //display: flex;
-  //flex-direction: column;
+  
+  &__input{
+    margin-bottom: 3em;
+  }
 }
 
 </style>
