@@ -14,7 +14,7 @@
         <div class="topic__details">
           <div class="topic__details__title">
             <div class="topic__details__title__text">
-              {{ topic.printScreen.title }}
+              {{ topic.printScreen.title && topic.printScreen.title.slice(0, 100) }}
             </div>
           </div>
           <div class="topic__details__url">
@@ -102,16 +102,22 @@ export default {
 
   &__details {
     flex: 2;
+    max-width: 50%;
     padding: 1em;
     justify-content: space-between;
     display: flex;
     flex-direction: column;
+    
 
     &__title {
       margin-bottom: 1.5em;
 
       &__text {
-        font-size: 4em;
+        font-size: 3rem;
+        @media screen and (min-width: 1000px) {
+          font-size: 4em;
+        }
+        overflow-wrap: break-word;
       }
     }
 
@@ -121,6 +127,7 @@ export default {
 
       &__text {
         font-size: 2em;
+        overflow-wrap: break-word;
       }
     }
 

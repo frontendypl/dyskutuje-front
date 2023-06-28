@@ -109,12 +109,20 @@ $errorColor: red;
 }
 
 .input {
-  width: 60%;
+  
+  width: 80%;
+  @media screen and (min-width: 1000px) {
+    width: 60%;
+  }
+
   position: relative;
   margin-left: auto;
 
   &__field {
     padding: 1em 9em 1em 1em;
+
+
+
     width: 100%;
     border-radius: 2em;
     font-size: 2em;
@@ -128,7 +136,13 @@ $errorColor: red;
     right: 0;
     top: 0;
     height: 100%;
-    width: 13em;
+
+    width: 8em;
+
+    @media screen and (min-width: 1000px) {
+      width: 13em;
+    }
+
     border: none;
     border-radius: 2em;
     background-color: $inputColor;
@@ -140,7 +154,11 @@ $errorColor: red;
     }
 
     svg {
-      font-size: 3em;
+      font-size: 2em;
+
+      @media screen and (min-width: 1000px) {
+        font-size: 3em;
+      }
     }
   }
 }
@@ -157,5 +175,4 @@ $errorColor: red;
       font-size: 3em;
     }
   }
-}
-</style>
+}</style>

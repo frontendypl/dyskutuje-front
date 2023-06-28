@@ -143,7 +143,11 @@ img {
 }
 
 html {
-  font-size: 8px;
+  font-size: 4px;
+
+  @media screen and (min-width: 321px) {
+    font-size: 6px;
+  }
 
   @media screen and (min-width: 1000px) {
     font-size: 10px;
@@ -155,7 +159,6 @@ html {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: 1em;
 
   font-family: Roboto, sans-serif;
 }
@@ -183,5 +186,6 @@ html {
 
 .main-view {
   margin: 4em 0;
+  padding: 1em;
 }
 </style>
