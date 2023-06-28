@@ -44,13 +44,6 @@
           <div class="TopicView__comment-list__comment__subcomments">
             <CommentComponent v-for="(subComments, i) in comment.subComments" :comment="subComments"
               :key="subComments._id" :data-key="subComments._id" :ref="`comment--${subComments._id}`">
-              <!-- <template v-slot:commentForm>
-              <CommentFormComponent 
-              :postNewComment="postNewComment"
-              :parent="subComments._id" 
-              @commentFormSent="commentFormSent(subComments._id)"
-              />
-            </template> -->
             </CommentComponent>
           </div>
 
@@ -89,7 +82,6 @@ export default {
   computed: {
     ...mapState({
       activeTopic: state => state.topicModule.activeTopic,
-      // newCommentErrors: state => state.topicModule.newCommentErrors,
       comments: state => state.topicModule.comments,
     }),
     ...mapGetters({
@@ -107,6 +99,10 @@ export default {
       postNewComment: 'topicModule/postNewComment',
       setPrintScreens: 'topicModule/setPrintScreens',
     }),
+    /**
+     * This method will be called on commentFormSent event emited after form send. The form will hide.
+     * @param {string} id - id of the comment with form.
+     */
     commentFormSent(id) {
       console.log(this.$refs[`comment--${id}`][0].handleFormActive());
     }

@@ -76,14 +76,6 @@ export default {
   mounted(){
     this.resetActiveTopic()
     this.setComments([])
-
-    // this.setTopics();
-    // this.setPrintScreens();
-
-    // const time = setInterval(() => {
-    //   this.setTopics();
-    //   this.setPrintScreens();
-    // }, 5000);
   },
 }
 </script>

@@ -1,11 +1,16 @@
 import axios from "axios";
-// import { forEach } from "core-js";
 
 export default {
     namespaced: true,
     state() {
         return {
+            /**
+             * The list of all topics
+             */
             topics: [],
+            /**
+             * single topic, this data will be presented on TopicView
+             */
             activeTopic: {
                 _id: '',
                 url: '',
@@ -13,13 +18,15 @@ export default {
                 updatedAt: '',
                 comments: []
             },
-            // activeTopic's comments
+            // Array of all comments belongs to activeTopic, presented on TopicView
             comments: [],
-
+            //Array of all comments from all topics
             allComments: [],
-            //TODO
+            //Array of all screenshots
             printScreens: [],
-
+            /**
+             * Statuses for requests, if status is pending request will not be send
+             */
             status: {
                 setTopics: 'ready',
                 setPrintScreens: 'ready',
@@ -29,9 +36,17 @@ export default {
         }
     },
     getters: {
+        /**
+         * Getter, return activeTopic's screenshot to present in topicView
+         * @returns {object}
+         */
         activeTopicPrintScreen(state) {
             return state.printScreens.find(el => el.topic === state.activeTopic._id)
         },
+        /**
+         * Return array of comments objects with their subcomments
+         * @returns {array}
+         */
         commentsWithSubComments(state) {
             const comments = state.comments.length ? [...state.comments] : [...state.activeTopic.comments]
             comments.forEach(comment => {
@@ -41,6 +56,10 @@ export default {
             })
             return comments
         },
+        /**
+         * Return array of topics objects with their screenshots
+         * @returns {array}
+         */
         topicsWithPrintScreens(state) {
             const topics = [...state.topics]
             const printScreens = [...state.printScreens]
@@ -61,7 +80,7 @@ export default {
         setActiveTopic(state, payload) {
             state.activeTopic = { ...payload }
         },
-        //Comments for activeTopic
+        //set Comments for activeTopic object
         setComments(state, payload) {
             state.comments = [...payload]
         },
@@ -73,7 +92,10 @@ export default {
         }
     },
     actions: {
-        async setTopics({ state, rootGetters, commit, dispatch }, payload) {
+        /**
+         * asynchronous method to get topics data from API
+         */
+        async setTopics({ state, rootGetters, commit, dispatch }) {
             if (state.status.setTopics === 'pending') return false
 
             try {
@@ -91,6 +113,9 @@ export default {
                 state.status.setTopics = 'ready'
             }
         },
+        /**
+         * asynchronous method to sent data to the API and create new topic in database
+         */
         postNewTopic({ state, rootGetters, commit, dispatch }, url) {
             return new Promise(async (resolve, reject) => {
                 try {
@@ -106,6 +131,10 @@ export default {
 
             })
         },
+        /**
+         * asynchronous method to get data of single topic from API
+         * @param {string} topicId 
+         */
         async getTopicData({ state, rootGetters, commit }, topicId) {
             if (state.status.setTopics === 'pending') return false
             try {
@@ -122,9 +151,16 @@ export default {
 
             }
         },
+        /**
+         * action using only to commit muttations and fill activeTopic object
+         * @param {object} payload 
+         */
         setActiveTopic({ commit }, payload) {
             commit('setActiveTopic', payload)
         },
+        /**
+         * clear activeTopic object, fill empty keys
+         */
         resetActiveTopic({ commit }) {
             commit('setActiveTopic', {
                 _id: '',
@@ -134,7 +170,13 @@ export default {
                 comments: []
             })
         },
-        //Comments
+        /**
+         * asynchronous method to sent new comment 
+         * @param {string} text new comment text
+         * @param {string} nickName nick of commentc author
+         * @param {string} parent id of parent comment if new comment is subcomment
+         * @returns {Promise>}
+         */
         postNewComment({ state, rootState, rootGetters, commit, dispatch }, { text, nickName, parent = null }) {
             return new Promise(async (resolve, reject) => {
                 try {
@@ -155,9 +197,16 @@ export default {
                 }
             })
         },
+        /**
+         * set Comments for activeTopic object
+         * @param {object} payload 
+         */
         setComments({ commit }, payload) {
             commit('setComments', payload)
         },
+        /**
+         * asynchronous method to get all comments objects from API
+         */
         async setAllComments({ rootGetters, commit, state }) {
             if (state.status.setAllComents === 'pending') return false
 
@@ -175,6 +224,9 @@ export default {
             }
             // commit('setAllComents',payload)
         },
+        /**
+         * asynchronous method to get all screenshots objects from API
+         */
         async setPrintScreens({ state, rootGetters, dispatch, commit }, payload) {
             if (state.status.setPrintScreens === 'pending') return false
 
@@ -191,15 +243,26 @@ export default {
                 state.status.setPrintScreens = 'ready'
             }
         },
+        /**
+         * save data to localstorage, can be used with various keys and datasets
+         * @param {string} name key of item, name of dataset in localstorage 
+         * @param {object} data dataset
+         */
         saveToStorage({ state, rootGetters, commit }, { name, data }) {
             localStorage.setItem(name, JSON.stringify(data))
 
         },
+        /**
+         * get all topics from localstorage to improve website starting
+         */
         loadTopicsFromStorage({ commit }) {
             console.log('storage setTopics')
             const topics = localStorage.getItem('topics')
             commit('setTopics', topics ? JSON.parse(topics) : [])
         },
+        /**
+         * get all screenshots from localstorage to improve website starting
+         */
         loadPrintScreensFromStorage({ commit }) {
             console.log('storage printScreens')
             const printScreens = localStorage.getItem('printScreens')

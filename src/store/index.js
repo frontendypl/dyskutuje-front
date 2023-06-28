@@ -12,9 +12,17 @@ export default new Vuex.Store({
   state: {
   },
   getters: {
+    /**
+     * Returns api url depending on enviroment (dev or production)
+     * @returns {string}
+     */
     apiUrl(){
       return location.href.indexOf('localhost') === -1? 'https://???????' : 'http://localhost:2000'
     },
+    /**
+     * Returns front url depending on enviroment (dev or production)
+     * @returns {string}
+     */
     frontUrl(){
       return location.href.indexOf('localhost') === -1? 'https://???????' : 'http://localhost:8080'
     },
