@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="textarea">
-        <textarea rows="5" class="textarea__field" v-model="text">
+        <textarea rows="5" class="textarea__field" v-model="text" :placeholder="textAreaPlaceholder">
       </textarea>
         <div class="errors">
           <div class="errors__error" v-for="(error, key, i) in newCommentErrors" :key="key">
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="input">
-        <input class="input__field" type="text" v-model="nickName">
+        <input class="input__field" type="text" v-model="nickName" :placeholder="nickPlaceholder">
         <button class="input__button" type="submit">
           <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" height="1em" viewBox="0 0 640 512">
             <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -55,6 +55,14 @@ export default {
       type: String,
       default: null
     },
+    textAreaPlaceholder: {
+      type: String,
+      default: 'Wpisz treść komentarza'
+    },
+    nickPlaceholder: {
+      type: String,
+      default: 'Podpisz się'
+    }
   },
   data() {
     return {

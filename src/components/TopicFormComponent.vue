@@ -2,7 +2,7 @@
   <div class="TopicInputComponent component">
     <form @submit.prevent="handleForm">
       <div class="input">
-        <input class="input__field" type="text" placeholder="Tutaj wklej lub wpisz adres strony"
+        <input class="input__field" type="text" :placeholder="inputPlaceholder"
                v-model="url"
         >
         <button class="input__button" type="submit">
@@ -34,6 +34,10 @@ export default {
     postNewTopic: {
       type: Function
     },
+    inputPlaceholder: {
+      type: String,
+      default: 'Tutaj wklej lub wpisz adres strony'
+    }
   },
   data(){
     return {

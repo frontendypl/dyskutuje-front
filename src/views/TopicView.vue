@@ -2,12 +2,32 @@
   <div class="TopicView">
     <div class="container">
       
+      <div class="meta">
+        <div class="meta__title">
+          <div class="meta__title__text">
+            {{ activeTopicPrintScreen?.title }}
+          </div>
+        </div>
+        <div class="meta__url">
+          <div class="meta__url__text">
+            <a :href="activeTopic?.url" target="_blank">
+              {{ activeTopic?.url  }}
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div class="TopicView__image" v-if="!!activeTopicPrintScreen?.src">
         <img class="TopicView__image__img" :src="`data:image/jpeg;base64,${activeTopicPrintScreen?.src}`" />
       </div>
       <ImageLoaderComponent v-else/>
 
       <div class="TopicView__comment-form">
+        <div class="TopicView__comment-form__heading">
+          <div class="TopicView__comment-form__heading__text">
+            Dodaj komentarz
+          </div>
+        </div>
         <CommentFormComponent :postNewComment="postNewComment" />
       </div>
       <div class="TopicView__comment-list" v-if="commentsWithSubComments.length">
@@ -25,6 +45,7 @@
               :postNewComment="postNewComment"
               :parent="comment._id" 
               @commentFormSent="commentFormSent(comment._id)"
+              :textAreaPlaceholder="'Wpisz treść odpowiedzi'"
               />
             </template>
           </CommentComponent>
@@ -50,8 +71,10 @@
         </div>
         
       </div>
-      <div v-else>
-        Nie ma jeszcze żadnych komentarzy.
+      <div class="no-comment" v-else>
+        <div class="no-comment__text">
+          Nie ma jeszcze żadnych komentarzy.
+        </div>
       </div>
     </div>
   </div>
@@ -122,6 +145,26 @@ export default {
 <style lang="scss" >
 .TopicView {
 
+  .meta{
+    margin-bottom: 2em;
+    background-color: rgba(0,0,0,0.1);
+    padding: 3em 1em;
+    border-radius: 2em;
+    &__title{
+      margin-bottom: 2em;
+      &__text {
+        font-size: 3em;
+        font-weight: 600;
+      }
+    }
+
+    &__url {
+      &__text {
+        font-size: 2em;
+      }
+    }
+  }
+  
   &__image {
     border-radius: 2em;
     border: 1px solid rgba(0,0,0,0.1);
@@ -132,6 +175,16 @@ export default {
   }
 
   &__comment-form {
+    
+    &__heading {
+      text-align: center;
+      margin-bottom: 2em;
+      &__text {
+        font-size: 3em;
+        font-weight: 600;
+      }
+    }
+
     margin: 7em 0;
   }
 
@@ -164,6 +217,12 @@ export default {
       }
     }
 
+  }
+
+  .no-comment {
+    &__text{
+      font-size: 2em;
+    }
   }
 
 }

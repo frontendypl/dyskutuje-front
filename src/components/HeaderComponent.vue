@@ -21,7 +21,7 @@
 
 <style scoped lang="scss">
 .HeaderComponent{
-
+  background-color: rgba(0,0,0,0.02);
 }
 
 .container {
