@@ -17,14 +17,14 @@ export default new Vuex.Store({
      * @returns {string}
      */
     apiUrl(){
-      return location.href.indexOf('localhost') === -1? 'https://???????' : 'http://localhost:2000'
+      return location.href.indexOf('localhost') === -1? 'https://api.dyskutuje.pl' : 'http://localhost:2000'
     },
     /**
      * Returns front url depending on enviroment (dev or production)
      * @returns {string}
      */
     frontUrl(){
-      return location.href.indexOf('localhost') === -1? 'https://???????' : 'http://localhost:8080'
+      return location.href.indexOf('localhost') === -1? 'https://dyskutuje.pl' : 'http://localhost:8080'
     },
   },
   mutations: {
