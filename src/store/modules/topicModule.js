@@ -122,8 +122,7 @@ export default {
                     const response = await axios.post(`${rootGetters.apiUrl}/topics`, {
                         url
                     })
-                    //TODO przerobić na backendzie że jesli topic istnieje to komentarze pobierać do niego
-                    // commit('setActiveTopic', response.data)
+
                     resolve(response.data)
                 } catch (e) {
                     reject(e.response.data)
