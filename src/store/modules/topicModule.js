@@ -120,14 +120,15 @@ export default {
             return new Promise(async (resolve, reject) => {
                 try {
 
-                    apiURL = location.href.indexOf('localhost') === -1? 'https://dyskutuje.ngrok.app ' : 'http://localhost:2000'
+                    const apiURL = location.href.indexOf('localhost') === -1? 'https://dyskutuje.ngrok.app' : 'http://localhost:2000'
 
-                    const response = await axios.post(`${apiURLl}/topics`, {
+                    const response = await axios.post(`${apiURL}/topics`, {
                         url
                     })
 
                     resolve(response.data)
                 } catch (e) {
+                    // console.log(e)
                     reject(e.response.data)
                 }
 
