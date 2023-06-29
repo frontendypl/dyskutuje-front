@@ -17,7 +17,7 @@ export default new Vuex.Store({
      * @returns {string}
      */
     apiUrl(){
-      return location.href.indexOf('localhost') === -1? 'https://ef79-109-95-201-127.ngrok-free.app/' : 'http://localhost:2000'
+      return location.href.indexOf('localhost') === -1? 'https://api.dyskutuje.pl' : 'http://localhost:2000'
     },
     /**
      * Returns front url depending on enviroment (dev or production)
