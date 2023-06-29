@@ -119,7 +119,10 @@ export default {
         postNewTopic({ state, rootGetters, commit, dispatch }, url) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const response = await axios.post(`${rootGetters.apiUrl}/topics`, {
+
+                    apiURL = location.href.indexOf('localhost') === -1? 'https://dyskutuje.ngrok.app ' : 'http://localhost:2000'
+
+                    const response = await axios.post(`${apiURLl}/topics`, {
                         url
                     })
 
