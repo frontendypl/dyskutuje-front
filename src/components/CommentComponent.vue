@@ -83,22 +83,22 @@ export default {
             }
             interval = seconds / 2592000;
             if (interval > 1) {
-                return Math.floor(interval) + " misięcy";
+                return Math.floor(interval) + " mies.";
             }
             interval = seconds / 86400;
             if (interval > 1) {
-                return Math.floor(interval) + " dni";
+                return Math.floor(interval) + " d";
             }
             interval = seconds / 3600;
             if (interval > 1) {
-                return Math.floor(interval) + " godzin";
+                return Math.floor(interval) + " godz.";
             }
             interval = seconds / 60;
             if (interval > 1) {
-                return Math.floor(interval) + " minut";
+                return Math.floor(interval) + " min.";
             }
 
-            return Math.floor(seconds) + " sekund";
+            return Math.floor(seconds) + " s";
         }
     },
     mounted() {
