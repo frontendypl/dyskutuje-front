@@ -98,7 +98,7 @@ export default {
                 return Math.floor(interval) + " min.";
             }
 
-            return Math.floor(seconds) + " s";
+            return Math.floor(seconds) < 0 ? '': Math.floor(seconds) + " s";
         }
     },
     mounted() {
