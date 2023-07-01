@@ -9,7 +9,8 @@
         </div>
       </div>
       <div class="textarea">
-        <textarea rows="5" class="textarea__field" v-model="text" :placeholder="textAreaPlaceholder">
+        <textarea rows="5" class="textarea__field" :class="{ 'input__field--red': newCommentErrors.text?.path }"
+          v-model="text" :placeholder="textAreaPlaceholder">
       </textarea>
         <div class="errors">
           <div class="errors__error" v-for="(error, key, i) in newCommentErrors" :key="key">
@@ -20,7 +21,8 @@
         </div>
       </div>
       <div class="input">
-        <input class="input__field" type="text" v-model="nickName" :placeholder="nickPlaceholder">
+        <input class="input__field" type="text" :class="{ 'input__field--red': newCommentErrors.nickName?.path }"
+          v-model="nickName" :placeholder="nickPlaceholder">
         <button class="input__button" type="submit">
           <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" height="1em" viewBox="0 0 640 512">
             <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -30,7 +32,7 @@
         </button>
       </div>
     </form>
-    <div class="errors">
+    <div class="errors errors--input">
       <div class="errors__error" v-for="(error, key, i) in newCommentErrors" :key="key">
         <div class="errors__error__text" v-if="key === 'nickName'">
           {{ error.message }}
@@ -86,6 +88,7 @@ export default {
     resetForm() {
       this.text = '';
       this.nickName = ''
+      this.newCommentErrors = {}
     }
   }
 }
@@ -109,8 +112,9 @@ $errorColor: red;
 }
 
 .input {
-  
+
   width: 80%;
+
   @media screen and (min-width: 1000px) {
     width: 60%;
   }
@@ -120,14 +124,15 @@ $errorColor: red;
 
   &__field {
     padding: 1em 9em 1em 1em;
-
-
-
     width: 100%;
     border-radius: 2em;
     font-size: 2em;
     border: 2px solid $inputColor;
     transition: all 0.25s;
+
+    &--red {
+      border-color: red;
+    }
   }
 
   &__button {
@@ -165,8 +170,9 @@ $errorColor: red;
 
 .errors {
   text-align: center;
-  padding-right: 13em;
+  // padding-right: 13em;
   color: $errorColor;
+  margin-bottom: 3em;
 
   &__error {
     margin-top: 0.5em;
@@ -175,4 +181,15 @@ $errorColor: red;
       font-size: 3em;
     }
   }
-}</style>
+
+  &--input {
+    width: 80%;
+    margin: 0 0 0 auto;
+
+    @media screen and (min-width: 1000px) {
+      width: 60%;
+    }
+  }
+
+}
+</style>

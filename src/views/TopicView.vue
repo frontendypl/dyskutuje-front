@@ -22,7 +22,7 @@
       </div>
       <ImageLoaderComponent v-else />
 
-      <div class="TopicView__comment-form">
+      <div class="TopicView__comment-form" v-if="activeTopic._id">
         <div class="TopicView__comment-form__heading">
           <div class="TopicView__comment-form__heading__text">
             Dodaj komentarz

@@ -2,7 +2,11 @@
   <div class="TopicInputComponent component">
     <form @submit.prevent="handleForm">
       <div class="input">
-        <input class="input__field" type="text" :placeholder="inputPlaceholder" v-model="url">
+        <input class="input__field" type="text"
+          :class="{'input__field--red': newTopicErrors.url?.path}"           
+          :placeholder="inputPlaceholder" 
+          v-model="url"
+        >
         <button class="input__button" type="submit">
           <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" height="1em" viewBox="0 0 640 512">
             <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -76,8 +80,12 @@ $errorColor: red;
     width: 100%;
     border-radius: 2em;
     font-size: 2em;
-    border-color: $inputColor;
+    border: 2px solid $inputColor;
     transition: all 0.25s;
+
+    &--red {
+      border-color: red;
+    }
   }
 
   &__button {
@@ -114,7 +122,7 @@ $errorColor: red;
 
 .errors {
   text-align: center;
-  padding-right: 13em;
+  // padding-right: 13em;
   color: $errorColor;
 
   &__error {
