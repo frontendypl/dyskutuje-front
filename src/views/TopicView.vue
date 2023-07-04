@@ -52,7 +52,7 @@
       </div>
       <div class="no-comment" v-else>
         <div class="no-comment__text">
-          Nie ma jeszcze żadnych komentarzy.
+          {{!activeTopic._id? 'Trwa ładowanie komentarzy': 'Nie ma jeszcze żadnych komentarzy.'}}
         </div>
       </div>
     </div>
@@ -223,6 +223,7 @@ export default {
   }
 
   .no-comment {
+    margin-top: 2em;
     &__text {
       font-size: 2em;
     }

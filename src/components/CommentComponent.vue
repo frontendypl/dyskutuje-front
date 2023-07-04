@@ -139,7 +139,7 @@ export default {
         margin-top: 1em;
 
         &__text {
-            font-size: 3em;
+            font-size: 2.5em;
             font-weight: 500;
             word-wrap: break-word;
 
