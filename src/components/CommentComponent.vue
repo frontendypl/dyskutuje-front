@@ -14,7 +14,7 @@
             </div>
             <div class="comment__content">
                 <div class="comment__content__text">
-                    {{ comment.text }}
+                    <pre>{{ comment.text }}</pre>
                 </div>
             </div>
             <div class="comment__answer-button" v-if="!comment.parent">
@@ -141,7 +141,11 @@ export default {
         &__text {
             font-size: 3em;
             font-weight: 500;
-            word-wrap: break-word
+            word-wrap: break-word;
+
+            pre{
+                white-space: pre-line
+            }
         }
     }
 
